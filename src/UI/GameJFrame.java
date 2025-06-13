@@ -2,6 +2,7 @@ package UI;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,7 +14,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
 
     private static final int VICTORY_IMAGE_SIZE = 512;
     private static final int IMAGE_SIZE = 150;
-    private static final String PATH = "src/Image/000";
+    private static final String PATH = "src/Image/";
 
     //The objects with two options above the menu
     JMenu functionJMenu = new JMenu("功能");
@@ -106,7 +107,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
         int VICTORY_Y = (frameHeight - VICTORY_IMAGE_SIZE) / 2;
 
         if(victory()){
-            JLabel winJLabel = new JLabel(new ImageIcon("src/Image/victory.png"));
+            JLabel winJLabel = new JLabel(new ImageIcon(GameJFrame.class.getResource("/Image/victory.png")));
             winJLabel.setBounds(VICTORY_X,VICTORY_Y,VICTORY_IMAGE_SIZE,VICTORY_IMAGE_SIZE);
             this.getContentPane().add(winJLabel);
         }
@@ -119,20 +120,24 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
         imageNo.setBounds(130,30,100,20);
         this.getContentPane().add(imageNo);
 
+        JPanel puzzlePanel = new JPanel(new GridLayout(4, 4));
+        puzzlePanel.setBounds(CENTER_X, CENTER_Y, puzzleWidth, puzzleHeight);
+
         for (int i = 0; i < 4; i++) {
             for (int j = 0;  j< 4; j++) {
                 int number = data[i][j];
                 //create one object with image
                 //create one object of JLabel
-                JLabel jLabel = new JLabel(new ImageIcon(PATH+imageNum+"/"+number+".jpg"));
+                JLabel jLabel = new JLabel(new ImageIcon(PATH + "000" + imageNum + "/" + number + ".jpg"));
                 //specify the location of the image
-                jLabel.setBounds(IMAGE_SIZE * j  + CENTER_X,IMAGE_SIZE * i + CENTER_Y,IMAGE_SIZE,IMAGE_SIZE);
+//                jLabel.setBounds(IMAGE_SIZE * j  + CENTER_X,IMAGE_SIZE * i + CENTER_Y,IMAGE_SIZE,IMAGE_SIZE);
                 jLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
                 //Add the container to the interface
-                this.getContentPane().add(jLabel);
+                puzzlePanel.add(jLabel);
             }
         }
 
+        this.getContentPane().add(puzzlePanel);
 
         this.getContentPane().repaint();
         this.getContentPane().revalidate();
@@ -199,7 +204,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
         if(victory()) return;
         if (code == KeyEvent.VK_Q) {
             this.getContentPane().removeAll();
-            JLabel all = new JLabel(new ImageIcon(PATH + imageNum + "/preview.jpg"));
+            JLabel all = new JLabel(new ImageIcon(PATH + "000"+imageNum + "/preview.jpg"));
             all.setBounds(150, 140, 600, 600);
             this.getContentPane().add(all);
             this.getContentPane().repaint();
@@ -303,7 +308,7 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
 
     private static void wxJLabel() {
         JDialog jDialog = new JDialog();
-        JLabel jLabel = new JLabel(new ImageIcon("src/Image/wx.jpg"));
+        JLabel jLabel = new JLabel(new ImageIcon(GameJFrame.class.getResource("/Image/wx.jpg")));
         jLabel.setBounds(0,0,570,777);
         jDialog.getContentPane().add(jLabel);
         jDialog.setSize(670,877);
