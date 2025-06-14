@@ -15,7 +15,6 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
 
     private static final int VICTORY_IMAGE_SIZE = 512;
     private static final int IMAGE_SIZE = 150;
-    private static final String PATH = "src/Image/";
 
     //The objects with two options above the menu
     JMenu functionJMenu = new JMenu("功能");
