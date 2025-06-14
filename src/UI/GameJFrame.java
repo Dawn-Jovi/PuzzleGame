@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.net.URL;
 import java.util.Random;
 
 
@@ -124,15 +125,27 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
         puzzlePanel.setBounds(CENTER_X, CENTER_Y, puzzleWidth, puzzleHeight);
 
         for (int i = 0; i < 4; i++) {
-            for (int j = 0;  j< 4; j++) {
+            for (int j = 0; j < 4; j++) {
                 int number = data[i][j];
-                //create one object with image
-                //create one object of JLabel
-                JLabel jLabel = new JLabel(new ImageIcon(PATH + "000" + imageNum + "/" + number + ".jpg"));
-                //specify the location of the image
-//                jLabel.setBounds(IMAGE_SIZE * j  + CENTER_X,IMAGE_SIZE * i + CENTER_Y,IMAGE_SIZE,IMAGE_SIZE);
+                // 创建一个带有图像的对象
+                // 创建一个JLabel对象
+                URL oneImage = null;
+                String imagePath = String.format("/Image/%04d/%d.jpg", imageNum, number);
+                oneImage = GameJFrame.class.getResource(imagePath);
+                JLabel jLabel;
+                if (oneImage != null) {
+                    jLabel = new JLabel(new ImageIcon(oneImage));
+                } else {
+                    // 当图像资源不存在时，创建一个默认的JLabel
+                    jLabel = new JLabel();
+                    jLabel.setOpaque(true);
+                    jLabel.setBackground(Color.LIGHT_GRAY);
+                }
+                // 指定图像的位置
+//        jLabel.setBounds(IMAGE_SIZE * j  + CENTER_X,IMAGE_SIZE * i + CENTER_Y,IMAGE_SIZE,IMAGE_SIZE);
                 jLabel.setBorder(new BevelBorder(BevelBorder.RAISED));
-                //Add the container to the interface
+
+                // 将容器添加到界面
                 puzzlePanel.add(jLabel);
             }
         }
@@ -204,7 +217,12 @@ public class GameJFrame extends JFrame implements KeyListener, ActionListener {
         if(victory()) return;
         if (code == KeyEvent.VK_Q) {
             this.getContentPane().removeAll();
-            JLabel all = new JLabel(new ImageIcon(PATH + "000"+imageNum + "/preview.jpg"));
+
+            URL fullImage = null;
+            String imagePath = String.format("/Image/%04d/preview.jpg", imageNum);
+            fullImage = GameJFrame.class.getResource(imagePath);
+            JLabel all = new JLabel(new ImageIcon(fullImage));
+
             all.setBounds(150, 140, 600, 600);
             this.getContentPane().add(all);
             this.getContentPane().repaint();
